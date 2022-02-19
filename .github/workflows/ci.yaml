@@ -1,12 +1,13 @@
-name: 'PHP CI/CD'
-on: [push]
+name: 'CI/CD - Symfony Demo Application'
+on: push
 jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: shivammathur/setup-php@v2
-      - run: composer install --prefer-dist --optimize-autoloader
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
       - run: php -v
-      - run: php bin/console
-      
+      - run: php -m
