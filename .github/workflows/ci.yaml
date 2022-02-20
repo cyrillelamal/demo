@@ -9,7 +9,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-      - name: Install dependencies
-        run: composer install
+      - name: Cache dependenscies
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Install dependencies --prefer-dist --optimize-autoloader
+        run: composer install --no-interaction --no-progress
       - run: php bin/console
       - run: php -v
