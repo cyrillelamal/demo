@@ -14,9 +14,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock', 'vendor/bin/.phpunit/phpunit/composer.lock') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
+      - name: Cache PHPUnit dependencies
+        uses: actions/cache@v2
+        with:
+          path: 'vendor/bin/.phpunit/phpunit/vendor'
+          key: ${{ runner.os }}-phpunit-${{ hashFiles('vendor/bin/.phpunit/phpunit/composer.lock') }}
       - name: "Install PHPUnit"
         run: vendor/bin/simple-phpunit install
       - name: Run tests
