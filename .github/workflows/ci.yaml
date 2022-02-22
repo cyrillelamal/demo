@@ -26,3 +26,5 @@ jobs:
         run: vendor/bin/simple-phpunit install
       - name: Run tests
         run: php bin/phpunit
+      - name: Lint DI container
+        run: php bin/console lint:container
