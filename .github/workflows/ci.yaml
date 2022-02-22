@@ -32,5 +32,7 @@ jobs:
         run: composer require --dev twig/inky-extra twig/cssinliner-extra
       - name: Lint Twig templates
         run: php bin/console lint:twig
-      - name: Link translation files
+      - name: Lint translation files
         run: php bin/console lint:xliff translations
+      - name: Lint configuration files
+        run: php bin/console lint:yaml config
