@@ -4,9 +4,9 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v2
+        uses: cyrillelamal/setup-symfony-app@v3
       # - name: Setup PHP
       #   uses: shivammathur/setup-php@v2
       #   with:
@@ -26,9 +26,9 @@ jobs:
   linters:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v2
+        uses: cyrillelamal/setup-symfony-app@v3
       # - name: Setup PHP
       #   uses: shivammathur/setup-php@v2
       #   with:
