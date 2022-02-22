@@ -31,4 +31,4 @@ jobs:
       - name: Add Twig linter dependencies
         run: composer require --dev twig/inky-extra twig/cssinliner-extra
       - name: Lint Twig templates
-        run: php bin/console lint:container
+        run: php bin/console lint:twig
