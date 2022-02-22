@@ -1,7 +1,7 @@
 name: 'CI/CD - Symfony Demo Application'
 on: push
 jobs:
-  ci:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -10,6 +10,7 @@ jobs:
         with:
           extensions: 'intl, mbstring, pdo_sqlite'
           php-version: '8.1'
+          tools: 'php-cs-fixer, composer'
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
@@ -17,15 +18,26 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
-      - name: Cache PHPUnit dependencies
-        uses: actions/cache@v2
-        with:
-          path: vendor/bin/.phpunit/phpunit/vendor
-          key: ${{ runner.os }}-phpunit-${{ hashFiles('vendor/bin/.phpunit/phpunit/composer.lock') }}
-      - name: "Install PHPUnit"
-        run: vendor/bin/simple-phpunit install
       - name: Run tests
         run: php bin/phpunit
+  
+  linters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          extensions: 'intl, mbstring, pdo_sqlite'
+          php-version: '8.1'
+          tools: 'php-cs-fixer, composer'
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
       - name: Lint DI container
         run: php bin/console lint:container
       - name: Add Twig linter dependencies
