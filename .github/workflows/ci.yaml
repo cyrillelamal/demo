@@ -28,3 +28,7 @@ jobs:
         run: php bin/phpunit
       - name: Lint DI container
         run: php bin/console lint:container
+      - name: Add Twig linter dependencies
+        run: composer require --dev twig/inky-extra twig/cssinliner-extra
+      - name: Lint Twig templates
+        run: php bin/console lint:container
