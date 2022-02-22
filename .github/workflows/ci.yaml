@@ -16,5 +16,5 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
-      - run: php bin/console
-      - run: php -v
+      - name: Run tests
+        run: php bin/phpunit
