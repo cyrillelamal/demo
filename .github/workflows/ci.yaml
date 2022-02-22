@@ -20,7 +20,7 @@ jobs:
       - name: Cache PHPUnit dependencies
         uses: actions/cache@v2
         with:
-          path: 'vendor/bin/.phpunit/phpunit/vendor'
+          path: vendor/bin/.phpunit/phpunit/vendor
           key: ${{ runner.os }}-phpunit-${{ hashFiles('vendor/bin/.phpunit/phpunit/composer.lock') }}
       - name: "Install PHPUnit"
         run: vendor/bin/simple-phpunit install
