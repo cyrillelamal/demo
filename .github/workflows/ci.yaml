@@ -47,4 +47,4 @@ jobs:
         with:
           tools: 'composer, phpstan'
       - name: Check code for type safety
-        run: phpstan analyze
+        run: phpstan analyze --memory-limit=256M
