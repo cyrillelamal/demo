@@ -6,49 +6,36 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v2
-        with:
-          tools: 'composer, phpstan'
+        uses: cyrillelamal/setup-symfony-app@v1
       - name: Run tests
         run: php bin/phpunit
       - name: Check code for type safety
         run: vendor/bin/phpstan analyze
   
-  # linters:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Setup PHP
-  #       uses: cyrillelamal/setup-symfony-app@v1
-  #     - name: Lint DI container
-  #       run: php bin/console lint:container
-  #     - name: Add Twig linter dependencies
-  #       run: composer require --dev twig/inky-extra twig/cssinliner-extra
-  #     - name: Lint Twig templates
-  #       run: php bin/console lint:twig
-  #     - name: Lint translation files
-  #       run: php bin/console lint:xliff translations
-  #     - name: Lint configuration files
-  #       run: php bin/console lint:yaml config
+  linters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: cyrillelamal/setup-symfony-app@v1
+      - name: Lint DI container
+        run: php bin/console lint:container
+      - name: Add Twig linter dependencies
+        run: composer require --dev twig/inky-extra twig/cssinliner-extra
+      - name: Lint Twig templates
+        run: php bin/console lint:twig
+      - name: Lint translation files
+        run: php bin/console lint:xliff translations
+      - name: Lint configuration files
+        run: php bin/console lint:yaml config
 
-  # code-standards:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Setup PHP
-  #       uses: cyrillelamal/setup-symfony-app@v2
-  #       with:
-  #         tools: 'composer, php-cs-fixer'
-  #     - name: Check for compliance with standards
-  #       run: php-cs-fixer fix --diff --dry-run
-
-  # type-safety:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Setup PHP
-  #       uses: cyrillelamal/setup-symfony-app@v2
-  #       with:
-  #         tools: 'composer, phpstan'
-  #     - name: Check code for type safety
-  #       run: vendor/bin/phpstan analyze
+  code-standards:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: cyrillelamal/setup-symfony-app@v2
+        with:
+          tools: 'composer, php-cs-fixer'
+      - name: Check for compliance with standards
+        run: php-cs-fixer fix --diff --dry-run
