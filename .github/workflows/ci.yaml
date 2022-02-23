@@ -27,7 +27,7 @@ jobs:
       - name: Lint configuration files
         run: php bin/console lint:yaml config
 
-  code-standarts:
+  code-standards:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -37,3 +37,14 @@ jobs:
           tools: 'composer, php-cs-fixer'
       - name: Check for compliance with standards
         run: php-cs-fixer fix --diff --dry-run
+
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: cyrillelamal/setup-symfony-app@v2
+        with:
+          tools: 'composer, phpstan'
+      - name: Check code for type safety
+        run: phpstan analyze
