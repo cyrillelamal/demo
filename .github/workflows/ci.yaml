@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v2
+        uses: cyrillelamal/setup-symfony-app@v1
       - name: Run tests
         run: php bin/phpunit
   
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v2
+        uses: cyrillelamal/setup-symfony-app@v1
       - name: Lint DI container
         run: php bin/console lint:container
       - name: Add Twig linter dependencies
@@ -26,3 +26,14 @@ jobs:
         run: php bin/console lint:xliff translations
       - name: Lint configuration files
         run: php bin/console lint:yaml config
+
+  code-standarts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: cyrillelamal/setup-symfony-app@v2
+        with:
+          tools: 'composer, php-cs-fixer'
+      - name: Check for compliance with standards
+        run: php-cs-fixer fix --diff --dry-run
