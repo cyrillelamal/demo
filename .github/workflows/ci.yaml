@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v1
+        uses: cyrillelamal/setup-symfony-app@v2
       - name: Run tests
         run: php bin/phpunit
   
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v1
+        uses: cyrillelamal/setup-symfony-app@v2
       - name: Lint DI container
         run: php bin/console lint:container
       - name: Add Twig linter dependencies
