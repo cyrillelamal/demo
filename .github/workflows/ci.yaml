@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v1
+        uses: cyrillelamal/setup-symfony-app@v3
       - name: Run tests
         run: php bin/phpunit
       - name: Check code for type safety
@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v1
+        uses: cyrillelamal/setup-symfony-app@v3
       - name: Lint DI container
         run: php bin/console lint:container
       - name: Add Twig linter dependencies
@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v2
+        uses: cyrillelamal/setup-symfony-app@v3
         with:
           tools: 'composer, php-cs-fixer'
       - name: Check for compliance with standards
