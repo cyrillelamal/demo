@@ -45,6 +45,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v3
+      - uses: cyrillelamal/setup-symfony-app@v3
       - name: Check if any dependencies are compromised
       - run: symfony check:security
