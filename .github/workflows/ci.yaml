@@ -47,4 +47,4 @@ jobs:
       - name: Setup PHP
       - uses: cyrillelamal/setup-symfony-app@v3
       - name: Check if any dependencies are compromised
-      - run: symfony check:security
+        run: symfony check:security
