@@ -39,12 +39,3 @@ jobs:
           tools: 'composer, php-cs-fixer'
       - name: Check for compliance with standards
         run: php-cs-fixer fix --diff --dry-run
-  
-  security-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v3
-      - name: Check if any dependencies are compromised
-        run: symfony check:security
