@@ -1,7 +1,7 @@
 name: 'Dependency scan'
 on:
   schedule:
-    - cron: '30 2 * * *'
+    - cron: '10 15 * * *'
 jobs:
   security-check:
     runs-on: ubuntu-latest
