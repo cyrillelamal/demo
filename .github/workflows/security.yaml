@@ -1,7 +1,7 @@
 name: Dependency scan
 on:
   schedule:
-    - cron: '09 17 * * 0-5'
+    - cron: '21 20 * * 0-5'
 jobs:
   security-check:
     runs-on: ubuntu-latest
