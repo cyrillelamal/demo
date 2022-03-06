@@ -39,3 +39,18 @@ jobs:
           tools: 'composer, php-cs-fixer'
       - name: Check for compliance with standards
         run: php-cs-fixer fix --diff --dry-run
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [tests, linters]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: cyrillelamal/setup-symfony-app@v3
+      - name: Setup SSH
+        run: |
+          mkdir "$HOME/.ssh"
+          echo "${{ secrets.ssh_key }}" > "$HOME/.ssh/key"
+          chmod 600 "$HOME/.ssh/key"
+      - name: Upload
+        run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --exclude=".git" ./ root@80.249.145.124:/var/www/demo
