@@ -55,4 +55,4 @@ jobs:
       - name: Upload
         run: |
           rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --exclude=".git" ./ root@80.249.145.124:/var/www/demo
-          ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no root@80.249.145.124 chown -R www_data /var/www/demo
+          ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no root@80.249.145.124 chown -R www-data /var/www/demo
