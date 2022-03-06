@@ -51,6 +51,7 @@ jobs:
         run: |
           mkdir "$HOME/.ssh"
           echo "${{ secrets.ssh_key }}" > "$HOME/.ssh/key"
+          chmod 600 "$HOME/.ssh/key"
       - name: Upload
         run: |
           rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --exclude=".git" ./ root@80.249.145.124:/var/www/demo
