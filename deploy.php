@@ -9,6 +9,7 @@ set('application', 'Demo');
 // Project repository
 set('repository', 'git@github.com:cyrillelamal/demo.git');
 
+set('http_user', 'www-data');
 
 // Shared files/dirs between deploys
 add('shared_files', []);
