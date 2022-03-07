@@ -28,6 +28,11 @@ host('80.249.145.124')
    ->addSshOption('StrictHostKeyChecking', 'no');
 
 // Tasks
+desc('Deploy');
+task('deploy', function () {
+    run('export APP_ENV=prod');
+    run('/usr/local/bin/composer install --no-dev');
+});
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
