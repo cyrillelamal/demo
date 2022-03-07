@@ -54,5 +54,5 @@ jobs:
           chmod 600 "$HOME/.ssh/key"
       - name: Upload
         run: |
-          rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --exclude=".git" ./ root@80.249.145.124:/var/www/demo
+          rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --exclude=".git" ./ ${{ secrets.server_user }}@${{ secrets.server_host }}:/var/www/demo
           ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no ${{ secrets.server_user }}@${{ secrets.server_host }} chown -R www-data /var/www/demo
