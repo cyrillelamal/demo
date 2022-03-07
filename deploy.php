@@ -22,6 +22,7 @@ add('writable_dirs', []);
 host('80.249.145.124')
    ->set('remote_user', 'www-data')
    ->set('deploy_path', '/var/www/demo')
+   ->set('writable_mode', 'chmod')
    ->user('root')
    ->identityFile('~/.ssh/key')
    ->addSshOption('StrictHostKeyChecking', 'no');
