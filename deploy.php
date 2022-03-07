@@ -24,7 +24,8 @@ host('80.249.145.124')
    ->set('remote_user', 'root')
    ->set('deploy_path', '/var/www/demo')
    ->user('root')
-   ->identityFile('~/.ssh/key');
+   ->identityFile('~/.ssh/key')
+   ->addSshOption('StrictHostKeyChecking', 'no');
 
 // Tasks
 
