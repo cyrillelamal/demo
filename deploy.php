@@ -32,7 +32,7 @@ task('php-fpm:restart', function() {
     run('systemctl restart php8.0-fpm.service');
 });
 
-after('deploy:symlink', 'cachetool:clear:opcache');
+after('deploy:symlink', 'php-fpm:restart');
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
