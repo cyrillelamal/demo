@@ -2,7 +2,6 @@
 namespace Deployer;
 
 require 'recipe/symfony4.php';
-require 'contrib/cachetool.php';
 
 // Project name
 set('application', 'Demo');
@@ -29,6 +28,10 @@ host('80.249.145.124')
    ->addSshOption('StrictHostKeyChecking', 'no');
 
 // Tasks
+task('php-fpm:restart', function() {
+    run('systemctl restart php8.0-fpm.service');
+});
+
 after('deploy:symlink', 'cachetool:clear:opcache');
 
 // [Optional] if deploy fails automatically unlock.
