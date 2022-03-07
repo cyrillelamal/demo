@@ -28,6 +28,7 @@ host('80.249.145.124')
 // Tasks
 desc('Deploy');
 task('deploy', [
+    'deploy:info',
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
@@ -36,6 +37,7 @@ task('deploy', [
     'deploy:create_cache_dir',
     'deploy:shared',
     'deploy:assets',
+    'deploy:vendors',
     'dependencies:install',
     'deploy:cache:clear',
     'deploy:cache:warmup',
