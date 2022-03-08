@@ -11,13 +11,6 @@ set('repository', 'git@github.com:cyrillelamal/demo.git');
 
 set('http_user', 'www-data');
 
-// Shared files/dirs between deploys
-add('shared_files', []);
-add('shared_dirs', []);
-
-// Writable dirs by web server
-add('writable_dirs', []);
-
 // Hosts
 host('80.249.145.124')
    ->set('remote_user', 'www-data')
