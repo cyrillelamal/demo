@@ -25,11 +25,8 @@ task('php-fpm:restart', function() {
     run('systemctl restart php8.0-fpm.service');
 });
 
+before('deploy:symlink', 'database:migrate');
 after('deploy:symlink', 'php-fpm:restart');
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
-
-// Migrate database before symlink new release.
-
-before('deploy:symlink', 'database:migrate');
