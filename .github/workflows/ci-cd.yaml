@@ -51,11 +51,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Release
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: marvinpinto/action-automatic-releases@v1
         with:
-          commit_options: --squash
-          branch: release
-          tagging_message: ${{ github.ref_name }}
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          title: ${{ github.ref_name }}
+          files: .
 
   # deploy:
   #   runs-on: ubuntu-latest
