@@ -1,57 +1,71 @@
 name: 'CI/CD - Symfony Demo Application'
-on: push
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
 jobs:
-  tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v3
-      - name: Run tests
-        run: php bin/phpunit
-      - name: Check code for type safety
-        run: vendor/bin/phpstan analyze
+  # tests:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Setup PHP
+  #       uses: cyrillelamal/setup-symfony-app@v3
+  #     - name: Run tests
+  #       run: php bin/phpunit
+  #     - name: Check code for type safety
+  #       run: vendor/bin/phpstan analyze
 
-  linters:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v3
-      - name: Lint DI container
-        run: php bin/console lint:container
-      - name: Add Twig linter dependencies
-        run: composer require --dev twig/inky-extra twig/cssinliner-extra
-      - name: Lint Twig templates
-        run: php bin/console lint:twig templates
-      - name: Lint translation files
-        run: php bin/console lint:xliff translations
-      - name: Lint configuration files
-        run: php bin/console lint:yaml config
+  # linters:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Setup PHP
+  #       uses: cyrillelamal/setup-symfony-app@v3
+  #     - name: Lint DI container
+  #       run: php bin/console lint:container
+  #     - name: Add Twig linter dependencies
+  #       run: composer require --dev twig/inky-extra twig/cssinliner-extra
+  #     - name: Lint Twig templates
+  #       run: php bin/console lint:twig templates
+  #     - name: Lint translation files
+  #       run: php bin/console lint:xliff translations
+  #     - name: Lint configuration files
+  #       run: php bin/console lint:yaml config
 
-  code-standards:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP
-        uses: cyrillelamal/setup-symfony-app@v3
-        with:
-          tools: 'composer, php-cs-fixer'
-      - name: Check for compliance with standards
-        run: php-cs-fixer fix --diff --dry-run src
+  # code-standards:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Setup PHP
+  #       uses: cyrillelamal/setup-symfony-app@v3
+  #       with:
+  #         tools: 'composer, php-cs-fixer'
+  #     - name: Check for compliance with standards
+  #       run: php-cs-fixer fix --diff --dry-run src
 
-  deploy:
+  release:
     runs-on: ubuntu-latest
     needs: [tests, linters]
     steps:
-      - uses: actions/checkout@v2
-      - uses: shivammathur/setup-php@v2
-      - name: Setup SSH key
-        run: |
-          mkdir "$HOME/.ssh"
-          echo "${{ secrets.ssh_key }}" > "$HOME/.ssh/key"
-          chmod 600 "$HOME/.ssh/key"
-      - name: Deploy
-        run: |
-          curl -LO https://deployer.org/deployer.phar && mv deployer.phar /usr/local/bin/dep && chmod +x /usr/local/bin/dep
-          dep deploy
+      - run: echo ${{ github.ref_name }}
+      # - name: Release
+      #   uses: EndBug/add-and-commit@v8
+      #   with:
+
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: [tests, linters]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: shivammathur/setup-php@v2
+  #     - name: Setup SSH key
+  #       run: |
+  #         mkdir "$HOME/.ssh"
+  #         echo "${{ secrets.ssh_key }}" > "$HOME/.ssh/key"
+  #         chmod 600 "$HOME/.ssh/key"
+  #     - name: Deploy
+  #       run: |
+  #         curl -LO https://deployer.org/deployer.phar && mv deployer.phar /usr/local/bin/dep && chmod +x /usr/local/bin/dep
+  #         dep deploy
