@@ -1,0 +1,60 @@
+name: 'Symfony Demo Application - CI release Symfony Demo Application'
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: cyrillelamal/setup-symfony-app@v3
+      - name: Run tests
+        run: php bin/phpunit
+      - name: Check code for type safety
+        run: vendor/bin/phpstan analyze
+
+  linters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: cyrillelamal/setup-symfony-app@v3
+      - name: Lint DI container
+        run: php bin/console lint:container
+      - name: Add Twig linter dependencies
+        run: composer require --dev twig/inky-extra twig/cssinliner-extra
+      - name: Lint Twig templates
+        run: php bin/console lint:twig templates
+      - name: Lint translation files
+        run: php bin/console lint:xliff translations
+      - name: Lint configuration files
+        run: php bin/console lint:yaml config
+
+  code-standards:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: cyrillelamal/setup-symfony-app@v3
+        with:
+          tools: 'composer, php-cs-fixer'
+      - name: Check for compliance with standards
+        run: php-cs-fixer fix --diff --dry-run src
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [tests, linters]
+    steps:
+    - name: release
+      uses: actions/create-release@v1
+      with:
+        draft: false
+        prerelease: false
+        release_name: ${{ github.ref_name }}
+        tag_name: ${{ github.ref_name }}
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
