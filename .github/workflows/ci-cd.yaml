@@ -57,6 +57,7 @@ jobs:
           prerelease: false
           title: ${{ github.ref_name }}
           files: .
+          automatic_release_tag: false
 
   # deploy:
   #   runs-on: ubuntu-latest
